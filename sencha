@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 if [[ -z "${SENCHA_VERSION}" ]]; then
-    SENCHA_VERSION='6.7.0.63'
+    SENCHA_VERSION='7.2.0.84'
+    # SENCHA_VERSION='6.7.0.63'
 fi
  
 WORKDIR=""
@@ -28,7 +29,7 @@ echo "  Workdir: ${WORKDIR}"
 TMP_ENV_FILE=$(mktemp)
 env | grep -i _PROXY > ${TMP_ENV_FILE}
  
-docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) --env-file ${TMP_ENV_FILE} --volume ${VOLUME_HOST}:${VOLUME_CONT} --workdir ${WORKDIR} suicide/sencha-cmd /opt/Sencha/Cmd/${SENCHA_VERSION}/sencha $*
+docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) --env-file ${TMP_ENV_FILE} --volume ${VOLUME_HOST}:${VOLUME_CONT} --workdir ${WORKDIR} suicide/sencha-cmd:${SENCHA_VERSION} /opt/Sencha/Cmd/${SENCHA_VERSION}/sencha $*
 EXIT_CODE=$?
  
 rm ${TMP_ENV_FILE}

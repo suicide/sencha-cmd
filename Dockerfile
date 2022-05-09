@@ -1,4 +1,4 @@
-ARG version=6.7.0.63
+ARG version=7.2.0.84
 
 FROM devvault/senchacmd:${version}
 
