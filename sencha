@@ -7,6 +7,7 @@ fi
 WORKDIR=""
 VOLUME_HOST=$(pwd -P)
 VOLUME_CONT="/code"
+SENCHA_IMAGE="suicide/sencha-cmd"
  
 while [[ ! -d "${VOLUME_HOST}/.remote-packages" ]]; do
     WORKDIR="$(basename ${VOLUME_HOST})/${WORKDIR}"
@@ -29,7 +30,7 @@ echo "  Workdir: ${WORKDIR}"
 TMP_ENV_FILE=$(mktemp)
 env | grep -i _PROXY > ${TMP_ENV_FILE}
  
-docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) --env-file ${TMP_ENV_FILE} --volume ${VOLUME_HOST}:${VOLUME_CONT} --workdir ${WORKDIR} suicide/sencha-cmd:${SENCHA_VERSION} /opt/Sencha/Cmd/${SENCHA_VERSION}/sencha $*
+docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) --env-file ${TMP_ENV_FILE} --volume ${VOLUME_HOST}:${VOLUME_CONT} --workdir ${WORKDIR} ${SENCHA_IMAGE}:${SENCHA_VERSION} /opt/Sencha/Cmd/${SENCHA_VERSION}/sencha $*
 EXIT_CODE=$?
  
 rm ${TMP_ENV_FILE}
